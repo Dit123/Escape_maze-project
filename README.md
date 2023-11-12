@@ -15,7 +15,7 @@ To start playing Escape, follow these simple steps:
 
 Installation: Clone this repository to your local machine.
 
-git clone https://github.com/Dit123/escape-maze.git
+git clone https://github.com/Dit123/Escape-maze.git
 Dependencies: Ensure you have all the required dependencies installed.
 
 Running the Game: Compile and Execute the main game script to launch Escape.
