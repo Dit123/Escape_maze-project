@@ -1,13 +1,13 @@
 #ifndef SCORE_H
 #define SCORE_H
 
-struct Score {
+typedef struct {
     int points;
-};
-struct Score initScore();
-void updateScore(struct Score *score, int points);
-int getScore(struct Score *score);
-void displayScore(struct Score *score);
+} Score;
+
+Score initScore();
+void displayScore(Score *score);
+void updateScore(Score *score, int points);
+int getScore(Score *score);
 
 #endif /* SCORE_H */
-

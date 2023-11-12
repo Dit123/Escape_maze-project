@@ -1,16 +1,16 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+// Define the Config struct
 typedef struct {
     int screenWidth;
     int screenHeight;
     int soundEnabled;
 } Config;
 
-extern Config gameConfig;
-
+// Function prototypes for loading and saving configuration
 int LoadConfig(const char* filename);
 int SaveConfig(const char* filename);
 
-#endif
+#endif // CONFIG_H
 

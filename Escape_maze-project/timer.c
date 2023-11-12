@@ -1,8 +1,5 @@
+#include <stdio.h>
 #include "timer.h"
-
-struct Timer {
-    int gameTime;  // Game time in seconds
-};
 
 // Initialize a timer
 struct Timer initTimer() {
@@ -21,3 +18,18 @@ int getGameTime(struct Timer *timer) {
     return timer->gameTime;
 }
 
+int main() {
+    // Create a Timer object and initialize it
+    struct Timer myTimer = initTimer();
+
+    // Display the initial game time
+    printf("Initial Game Time: %d seconds\n", getGameTime(&myTimer));
+
+    // Update the game time (simulate being in a game loop)
+    for (int i = 0; i < 5; i++) {
+        updateTimer(&myTimer);
+        printf("Updated Game Time: %d seconds\n", getGameTime(&myTimer));
+    }
+
+    return 0;
+}

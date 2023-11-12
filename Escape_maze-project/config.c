@@ -1,15 +1,12 @@
-#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-// Define default configuration values
+#include "config.h"
 Config gameConfig = {
     .screenWidth = 800,
     .screenHeight = 600,
     .soundEnabled = 1,
 };
 
-// Function to load configuration from a file
 int LoadConfig(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
@@ -25,7 +22,6 @@ int LoadConfig(const char* filename) {
     return 1;
 }
 
-// Function to save configuration to a file
 int SaveConfig(const char* filename) {
     FILE* file = fopen(filename, "w");
     if (file == NULL) {
@@ -41,3 +37,25 @@ int SaveConfig(const char* filename) {
     return 1;
 }
 
+int main() {
+    // Modify the configuration here if needed
+    gameConfig.screenWidth = 1024;
+
+    // Example usage of LoadConfig and SaveConfig functions
+    if (LoadConfig("config.dat")) {
+        printf("Loaded configuration:\n");
+        printf("Screen Width: %d\n", gameConfig.screenWidth);
+        printf("Screen Height: %d\n", gameConfig.screenHeight);
+        printf("Sound Enabled: %d\n", gameConfig.soundEnabled);
+    } else {
+        printf("Failed to load configuration.\n");
+    }
+
+    if (SaveConfig("config.dat")) {
+        printf("Saved configuration to file.\n");
+    } else {
+        printf("Failed to save configuration.\n");
+    }
+
+    return 0;
+}

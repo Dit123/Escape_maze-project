@@ -2,17 +2,12 @@
 #define GAME_H
 
 #include <SDL2/SDL.h>
+#include "enums.h"
 
-// Define game states
-enum GameState {
-    MENU,
-    PLAYING,
-    GAME_OVER
-};
-
+int CheckCollision(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2);
 // Function to start a new game
 void StartNewGame();
-
+char GetPlayerInput();
 // Function to update the game
 void UpdateGame();
 

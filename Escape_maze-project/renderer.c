@@ -5,7 +5,8 @@
 SDL_Window* g_window = NULL;
 SDL_Renderer* g_renderer = NULL;
 
-// Initialize the graphics system
+TTF_Font* g_font = NULL;
+
 int Renderer_Init(const char* title, int width, int height) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL couldn't be initialized: %s\n", SDL_GetError());
@@ -32,10 +33,24 @@ int Renderer_Init(const char* title, int width, int height) {
         return -1;
     }
 
+    // Initialize SDL_ttf for font rendering
+    if (TTF_Init() < 0) {
+        printf("SDL_ttf couldn't be initialized: %s\n", TTF_GetError());
+        return -1;
+    }
+
+    // Initialize the font (using Arial as an example)
+    const char* fontFile = "arial.ttf";  // Replace with the appropriate font file on your system
+    int fontSize = 24;
+    g_font = TTF_OpenFont(fontFile, fontSize);
+    if (!g_font) {
+        printf("Failed to load font: %s\n", TTF_GetError());
+        return -1;
+    }
+
     return 0;
 }
 
-// Load a texture from an image file
 SDL_Texture* Renderer_LoadTexture(const char* filename) {
     SDL_Texture* texture = IMG_LoadTexture(g_renderer, filename);
     if (!texture) {
@@ -44,25 +59,21 @@ SDL_Texture* Renderer_LoadTexture(const char* filename) {
     return texture;
 }
 
-// Clear the screen
 void Renderer_Clear() {
     SDL_SetRenderDrawColor(g_renderer, 0, 0, 0, 255);
     SDL_RenderClear(g_renderer);
 }
 
-// Draw a texture on the screen
 void Renderer_DrawTexture(SDL_Texture* texture, int x, int y) {
     SDL_Rect dstRect = {x, y, 0, 0};
     SDL_QueryTexture(texture, NULL, NULL, &dstRect.w, &dstRect.h);
     SDL_RenderCopy(g_renderer, texture, NULL, &dstRect);
 }
 
-// Update the screen
 void Renderer_Render() {
     SDL_RenderPresent(g_renderer);
 }
 
-// Clean up and close the graphics system
 void Renderer_Close() {
     if (g_renderer) {
         SDL_DestroyRenderer(g_renderer);
@@ -73,6 +84,17 @@ void Renderer_Close() {
         g_window = NULL;
     }
     IMG_Quit();
+
+    // Close and free the font
+    if (g_font) {
+        TTF_CloseFont(g_font);
+        g_font = NULL;
+    }
+
+    TTF_Quit();
     SDL_Quit();
 }
 
+int main() {
+    return 0;
+}

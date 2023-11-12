@@ -2,24 +2,15 @@
 #define RENDERER_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
-// Initialize the graphics system
 int Renderer_Init(const char* title, int width, int height);
-
-// Load a texture from an image file
 SDL_Texture* Renderer_LoadTexture(const char* filename);
-
-// Clear the screen
 void Renderer_Clear();
-
-// Draw a texture on the screen
 void Renderer_DrawTexture(SDL_Texture* texture, int x, int y);
-
-// Update the screen
+void Renderer_DrawText(SDL_Renderer* renderer, const char* text, int x, int y);
 void Renderer_Render();
-
-// Clean up and close the graphics system
 void Renderer_Close();
+int Renderer_InitFont(const char* fontFile, int fontSize);
 
-#endif // RENDERER_H
-
+#endif

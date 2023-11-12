@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <SDL2/SDL.h>
+#include <ncurses.h>
+#include <math.h>
 #include "volume.h"
 
 void adjustVolume() {
@@ -12,7 +15,13 @@ void adjustVolume() {
         printf("2. Decrease Volume\n");
         printf("3. Back to Main Menu\n");
         printf("Enter your choice: ");
-        scanf("%d", &choice);
+
+        // Input validation
+        if (scanf("%d", &choice) != 1) {
+            printf("Invalid input. Please enter a number.\n");
+            while (getchar() != '\n'); // Clear input buffer
+            continue;
+        }
 
         switch (choice) {
             case 1:
@@ -26,9 +35,16 @@ void adjustVolume() {
                 }
                 break;
             case 3:
-                return;  
+                return;
             default:
                 printf("Invalid choice. Please select a valid option.\n");
         }
     } while (1);
+}
+
+int main() {
+    // Your program logic, maybe calling adjustVolume or other functions
+    adjustVolume();
+
+    return 0;
 }

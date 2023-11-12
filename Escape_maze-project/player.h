@@ -1,26 +1,22 @@
-// player.h
-
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#define MAZE_HEIGHT 11
+#define MAZE_WIDTH 21
+
 // Define player structure
-typedef struct {
-    int x; // X-coordinate
-    int y; // Y-coordinate
-    int health; // Player's health
-} Player;
+struct Player;
 
-// Function to initialize the player
-void initPlayer(Player* player, int startX, int startY);
-
-// Function to update the player's position
-void updatePlayerPosition(Player* player, int newX, int newY);
-
-// Function to handle player input
-void handlePlayerInput(Player* player, char input);
-
-// Function to check if the player has collided with an enemy or obstacle
-int checkPlayerCollision(Player* player, const char maze[MAZE_HEIGHT][MAZE_WIDTH]);
+void initPlayer(struct Player *player, int startX, int startY);
+int checkPlayerCollision(struct Player *player, const char maze[MAZE_HEIGHT][MAZE_WIDTH]);
+void movePlayer(struct Player *player, int deltaX, int deltaY);
+void increaseScore(struct Player *player, int points);
+void decreaseHealth(struct Player *player, int damage);
+int isPlayerAlive(struct Player *player);
+int getPlayerX(struct Player *player);
+int getPlayerY(struct Player *player);
+int getPlayerScore(struct Player *player);
+int getPlayerHealth(struct Player *player);
 
 #endif
 

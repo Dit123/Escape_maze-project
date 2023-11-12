@@ -1,77 +1,92 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
-#include "game.h"  // Include your game-related header files
-#include "menu.h"
-#include "renderer.h"
-#include "audio_manager.h"  // Include your audio manager
+#include <SDL2/SDL_mixer.h>
+#include "auth.h"
+#include "collision.h"
+#include "config.h"
 #include "enums.h"
+#include "gamelogic.h"
+#include "input.h"
+#include "maze.h"
+#include "menu.h"
+#include "player.h"
+#include "renderer.h"
+#include "score.h"
+#include "timer.h"
+#include "utilities.h"
+#include "volume.h"
 
 int main() {
-    // Initialize SDL2 and game components
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+    // Initialize SDL and other components
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         fprintf(stderr, "SDL initialization failed: %s\n", SDL_GetError());
         return 1;
     }
 
-    // Create a window and renderer
-    if (InitializeSDL() != 0) {
-        fprintf(stderr, "SDL initialization failed\n");
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        fprintf(stderr, "SDL_Mixer initialization failed: %s\n", Mix_GetError());
         return 1;
     }
 
-    SDL_Window* window = CreateWindow("Your Game Window", screenWidth, screenHeight);
-    SDL_Renderer* renderer = CreateRenderer(window);
+    // Initialize other components (config, timer, etc.)
+    Config gameConfig;
+    if (!LoadConfig("config.dat")) {
+        fprintf(stderr, "Failed to load config file. Using default settings.\n");
+    }
 
-    // Initialize the audio manager
-    if (InitializeAudio() != 0) {
-        fprintf(stderr, "Audio manager initialization failed\n");
+    struct Timer gameTimer = initTimer();
+
+    // Initialize SDL Window and Renderer
+    if (Renderer_Init("Your Game Title", gameConfig.screenWidth, gameConfig.screenHeight) != 0) {
+        fprintf(stderr, "Renderer initialization failed.\n");
+        Mix_CloseAudio();
+        SDL_Quit();
         return 1;
     }
 
-    // Load game assets and initialize game variables
-    if (LoadGameAssets() != 0) {
-        fprintf(stderr, "Failed to load game assets\n");
-        return 1;
-    }
+    // Initialize other components (player, maze, etc.)
+    struct Player player;
+    initPlayer(&player, 0, 0);
 
-    // Initialize game state
-    enum GameState gameState = MENU;
-    int quit = 0;
+    char maze[MAZE_HEIGHT][MAZE_WIDTH];
+    generateMaze(maze);
 
-    while (!quit) {
-        SDL_Event event;
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                quit = 1;
-            }
+    // Main game loop
+    while (gameState != GAME_OVER) {
+        // Handle input
+        int moveDirection = 0;
+        handleInput(event, &quit, &moveDirection);
 
-            // Pass input events to your input manager
-            HandleInputEvent(event, &gameState);
+        // Update game state based on input
+        updateGameState(moveDirection, &player, maze);
+
+        // Render game state
+        Renderer_Clear();
+        renderGameState(&player, maze);
+        Renderer_Render();
+
+        // Update timer
+        updateTimer(&gameTimer);
+
+        // Other game logic (collision detection, scoring, etc.)
+        int collisionResult = CheckCollision(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT, 0, 0, 0, 0);
+        if (collisionResult) {
+            // Handle collision
         }
 
-        // Update the game based on its current state
-        switch (gameState) {
-            case MENU:
-                HandleMenu();
-                break;
+        // Your scoring logic here
+        increaseScore(&player, 10);
 
-            case PLAYING:
-                UpdateGame();
-                break;
-
-            case GAME_OVER:
-                HandleGameOver();
-                break;
+        // Check for game over condition
+        if (isGameOver(&player)) {
+            gameState = GAME_OVER;
         }
-
-        // Render the game using your rendering functions
-        RenderGame(renderer);
     }
 
-    // Cleanup and quit
-    QuitAudio();  // Close audio resources
-    SDL_Quit();   // Quit SDL
+    // Cleanup and exit
+    Renderer_Close();
+    Mix_CloseAudio();
+    SDL_Quit();
 
     return 0;
 }
-

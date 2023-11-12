@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <timer.h>
 #include "maze.h"
+#include "timer.h"
 
 #define MAZE_WIDTH 21
 #define MAZE_HEIGHT 11
+
+#define WALL '#'
+#define EMPTY ' '
+#define EXIT 'E'
 
 // Function to initialize the maze with walls
 void initializeMaze(char maze[MAZE_HEIGHT][MAZE_WIDTH]) {

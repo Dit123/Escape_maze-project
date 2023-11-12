@@ -87,7 +87,6 @@ int main() {
     scanf("%s", inputUsername);
     printf("Password: ");
     scanf("%s", inputPassword);
-
     // Authenticate the user
     if (authenticateUser(inputUsername, inputPassword)) {
         printf("Sign-in successful. You are now ready to play the game!\n");
