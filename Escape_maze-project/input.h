@@ -1,7 +1,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 #define MOVE_UP 0
 #define MOVE_DOWN 1
@@ -13,4 +13,3 @@ void handleInput(SDL_Event event, int* quit, int* moveDirection);
 void cleanUpInput();
 
 #endif  // INPUT_H
-

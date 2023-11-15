@@ -2,10 +2,15 @@
 #define PLAYER_H
 
 #define MAZE_HEIGHT 11
-#define MAZE_WIDTH 21
+#define MAZE_WIDTH  21
 
 // Define player structure
-struct Player;
+struct Player {
+    int x;
+    int y;
+    int health;
+    int score;
+};
 
 void initPlayer(struct Player *player, int startX, int startY);
 int checkPlayerCollision(struct Player *player, const char maze[MAZE_HEIGHT][MAZE_WIDTH]);

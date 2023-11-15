@@ -24,7 +24,7 @@ void displayScore(Score *score) {
 }
 
 // Main function
-int main() {
+int scoreGame() {
     // Create a Score object and initialize it
     Score myScore = initScore();
 
@@ -39,3 +39,4 @@ int main() {
     
     return 0;
 }
+

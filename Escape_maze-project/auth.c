@@ -31,8 +31,11 @@ int authenticateUser(const char* username, const char* password) {
     }
     return 0;  // Authentication failed
 }
+void startGame() {
+    startGame;
+}
 
-int main() {
+int runAuthCode() {
     initializeUsers();
 
     char inputUsername[50];
@@ -43,18 +46,18 @@ int main() {
     // Prompt the user to sign in
     printf("Please sign in:\n");
     printf("Username: ");
-    scanf("%s", inputUsername);
+    fgets(inputUsername, sizeof(inputUsername), stdin);
+    inputUsername[strcspn(inputUsername, "\n")] = '\0';
     printf("Password: ");
-    scanf("%s", inputPassword);
+    fgets(inputPassword, sizeof(inputPassword), stdin);
+    inputPassword[strcspn(inputPassword, "\n")] = '\0';
 
     // Authenticate the user
     if (authenticateUser(inputUsername, inputPassword)) {
         printf("Sign-in successful. You are now ready to play the game!\n");
-        // Add code here to start the game.
+        startGame(); 
     } else {
         printf("Authentication failed. Please check your username and password.\n");
     }
-
     return 0;
 }
-

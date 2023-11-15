@@ -2,19 +2,13 @@
 #include "player.h"
 #include "maze.h"
 
-struct Player {
-    int x;
-    int y;
-    int health;
-    int score;
-};
 
 // Initialize a player
 void initPlayer(struct Player *player, int startX, int startY) {
     player->x = startX;
     player->y = startY;
-    player->health = 100; // Set an initial health value
-    player->score = 0;   // Set an initial score value
+    player->health = 100;
+    player->score = 0;
 }
 
 int checkPlayerCollision( struct Player* player, const char maze[MAZE_HEIGHT][MAZE_WIDTH]) {
@@ -73,7 +67,7 @@ int getPlayerHealth(struct Player *player) {
     return player->health;
 }
 
-int main() {
+int playerGame() {
     // Create a player
     struct Player player;
     initPlayer(&player, 0, 0); // Initialize the player at position (0, 0)

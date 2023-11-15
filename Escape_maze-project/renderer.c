@@ -95,6 +95,7 @@ void Renderer_Close() {
     SDL_Quit();
 }
 
-int main() {
+int rendererGame() {
     return 0;
 }
+

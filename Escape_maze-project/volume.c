@@ -42,7 +42,7 @@ void adjustVolume() {
     } while (1);
 }
 
-int main() {
+int volumeGame() {
     // Your program logic, maybe calling adjustVolume or other functions
     adjustVolume();
 

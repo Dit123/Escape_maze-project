@@ -18,7 +18,7 @@ int Clamp(int value, int min, int max) {
     }
 }
 
-int main() {
+int utilitiesGame() {
     // Test the RandomNumber function
     printf("Random Number: %d\n", RandomNumber(1, 100));
 

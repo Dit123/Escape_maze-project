@@ -18,7 +18,7 @@ int getGameTime(struct Timer *timer) {
     return timer->gameTime;
 }
 
-int main() {
+int timerGame() {
     // Create a Timer object and initialize it
     struct Timer myTimer = initTimer();
 

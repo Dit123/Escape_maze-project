@@ -46,7 +46,7 @@ void performAction(int choice) {
             break;
         case 2:
             printf("Sign In:\n");
-            printf("Sign-in successful! Get ready to play.\n")
+            printf("Sign-in successful! Get ready to play.\n");
             system("./game");
             break;
         case 3:
@@ -69,7 +69,7 @@ void performAction(int choice) {
     }
 }
 
-int main() {
+int menuGame() {
     bool exitProgram = false;
 
     while (!exitProgram) {
@@ -94,9 +94,6 @@ int main() {
     } else {
         printf("Authentication failed. Please check your username and password.\n");
     }
-
-    return 0;
-}
         // Ask the user if they want to continue
         char response;
         printf("Do you want to continue (y/n)? ");
@@ -109,4 +106,3 @@ int main() {
 
     return 0;
 }
-

@@ -7,6 +7,7 @@ Config gameConfig = {
     .soundEnabled = 1,
 };
 
+
 int LoadConfig(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
@@ -37,7 +38,7 @@ int SaveConfig(const char* filename) {
     return 1;
 }
 
-int main() {
+int configureGame() {
     // Modify the configuration here if needed
     gameConfig.screenWidth = 1024;
 
